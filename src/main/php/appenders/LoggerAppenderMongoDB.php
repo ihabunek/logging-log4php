@@ -221,7 +221,8 @@ class LoggerAppenderMongoDB extends LoggerAppender {
 		$this->port = self::DEFAULT_MONGO_PORT;
 		$this->databaseName = self::DEFAULT_DB_NAME;
 		$this->collectionName = self::DEFAULT_COLLECTION_NAME;
-		$this->timeout = self::DEFAULT_TIMEOUT_VALUE;
+		// $this->timeout = self::DEFAULT_TIMEOUT_VALUE;
+		$this->connectionTimeout = self::DEFAULT_TIMEOUT_VALUE;
 		$this->requiresLayout = false;
 		$this->capped = self::DEFAULT_CAPPED;
 		$this->cappedMax = self::DEFAULT_CAPPED_MAX;
