@@ -15,6 +15,6 @@ script:
 services:
     - mongodb
 
-notifications:
-    email: log4php-dev@logging.apache.org
-    irc: "chat.freenode.net#apache-logging"
+# notifications:
+#     email: log4php-dev@logging.apache.org
+#     irc: "chat.freenode.net#apache-logging"
