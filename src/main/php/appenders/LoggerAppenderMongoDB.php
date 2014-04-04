@@ -221,8 +221,7 @@ class LoggerAppenderMongoDB extends LoggerAppender {
 		$this->port = self::DEFAULT_MONGO_PORT;
 		$this->databaseName = self::DEFAULT_DB_NAME;
 		$this->collectionName = self::DEFAULT_COLLECTION_NAME;
-		// $this->timeout = self::DEFAULT_TIMEOUT_VALUE;
-		$this->connectionTimeout = self::DEFAULT_TIMEOUT_VALUE;
+		$this->timeout = self::DEFAULT_TIMEOUT_VALUE;
 		$this->requiresLayout = false;
 		$this->capped = self::DEFAULT_CAPPED;
 		$this->cappedMax = self::DEFAULT_CAPPED_MAX;
@@ -241,18 +240,14 @@ class LoggerAppenderMongoDB extends LoggerAppender {
 		# Building connection options.
 		$options = array(
 			'w' => (is_numeric($this->writeConcern)) ? (int) $this->writeConcern : $this->writeConcern,
-			'timeout' => $this->timeout,
-			'wTimeout' => $this->writeConcernTimeout
+			'connectTimeoutMS' => $this->connectionTimeout,
+			'wTimeoutMS' => $this->writeConcernTimeout
 		);
 		if ($this->replicaSet !== null) {
 			$options['replicaSet'] = $this->replicaSet;
 		}
 		if ($this->socketTimeout !== null) {
 			$options['socketTimeoutMS'] = $this->socketTimeout;
-		}
-		# Backwards compatibility with timeout parameter.
-		if ($this->connectionTimeout !== null) {
-			$options['connectTimeoutMS'] = $options['timeout'] = $this->connectionTimeout;
 		}
 
 		# Building write options.
@@ -292,11 +287,10 @@ class LoggerAppenderMongoDB extends LoggerAppender {
 		} catch (InvalidArgumentException $ex) {
 			$this->closed = true;
 			$this->warn(sprintf('Error while selecting mongo database: %s', $ex->getMessage()));
-		} 
-		// catch (Exception $ex) {
-		// 	$this->closed = true;
-		// 	$this->warn('Invalid credentials for mongo database authentication');
-		// }
+		} catch (Exception $ex) {
+			$this->closed = true;
+			$this->warn(sprintf('Failed activating mongo appender: %s', $ex->getMessage()));
+		}
 	}
 
 	/**
