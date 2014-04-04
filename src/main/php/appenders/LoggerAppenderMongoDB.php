@@ -291,10 +291,11 @@ class LoggerAppenderMongoDB extends LoggerAppender {
 		} catch (InvalidArgumentException $ex) {
 			$this->closed = true;
 			$this->warn(sprintf('Error while selecting mongo database: %s', $ex->getMessage()));
-		} catch (Exception $ex) {
-			$this->closed = true;
-			$this->warn('Invalid credentials for mongo database authentication');
-		}
+		} 
+		// catch (Exception $ex) {
+		// 	$this->closed = true;
+		// 	$this->warn('Invalid credentials for mongo database authentication');
+		// }
 	}
 
 	/**
