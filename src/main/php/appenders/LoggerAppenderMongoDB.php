@@ -276,8 +276,11 @@ class LoggerAppenderMongoDB extends LoggerAppender {
 				}
 			}
 			if ($this->capped === true) {
-				$this->collection = $db->createCollection($this->collectionName, $this->capped, $this->cappedSize,
-														  $this->cappedMax);
+				$this->collection = $db->createCollection($this->collectionName, array(
+					'capped' => $this->capped,
+					'size' => $this->cappedSize,
+					'max' => $this->cappedMax,
+				));
 			} else {
 				$this->collection = $db->selectCollection($this->collectionName);
 			}

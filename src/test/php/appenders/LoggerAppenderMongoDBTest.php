@@ -310,7 +310,7 @@ class LoggerAppenderMongoDBTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testMultipleHostsConnection() {
-		$this->appender->setConnectionString('mongodb://locahost:27017,localhost:27017');
+		$this->appender->setConnectionString('mongodb://localhost:27017,localhost:27017');
 		$this->appender->activateOptions();
 	}
 
